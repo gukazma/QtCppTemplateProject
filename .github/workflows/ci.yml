@@ -54,6 +54,10 @@ jobs:
           ninja --version
           cmake --version
           gcc --version
+          sudo add-apt-repository universe
+          sudo apt-get update -y
+          sudo apt-get install -y autoconf-archive libxmu-dev libdbus-1-dev libxtst-dev libxi-dev libxinerama-dev libxcursor-dev xorg-dev libgl-dev libglu1-mesa-dev pkg-config
+          sudo apt-get install -y libxcb-util0-dev libxcb-util-dev libx11-xcb-dev libxcb-render-util0-dev libxcb-xkb-dev libxcb-icccm4-dev libxcb-image0-dev libxcb-keysyms1-dev libxcb-randr0-dev libxcb-shape0-dev libxcb-sync-dev libxcb-xfixes0-dev libxcb-xinerama0-dev libxcb-dri3-dev libxcb-cursor-dev
 
       - name: Use cmake
         run: cmake  -S./ -B./build -D CMAKE_BUILD_TYPE=${{ matrix.config.build_type }} && cmake --build ./build --config ${{ matrix.config.build_type }}
