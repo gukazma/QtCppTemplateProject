@@ -26,7 +26,7 @@ if(MSVC)
 message("Finding windeployqt")
 find_program(DEPLOYQT_EXECUTABLE windeployqt)
 set_target_properties(${TARGET_NAME} PROPERTIES
-LINK_FLAGS "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup"
+LINK_FLAGS_RELEASE "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup"
 )
 else()
 message("Finding linuxdeployqt")
