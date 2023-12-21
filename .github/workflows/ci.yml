@@ -50,13 +50,12 @@ jobs:
         uses: miurahr/install-linuxdeploy-action@v1
         with:
           plugins: qt appimage
-          
+
       - name: Install dependencies on ubuntu
         if: startsWith(matrix.config.name, 'Ubuntu_Latest_GCC')
         run: |
           sudo apt-get update
           sudo apt-get install ninja-build cmake -y
-          sudo apt-get install linuxdeployqt -y
           ninja --version
           cmake --version
           gcc --version
