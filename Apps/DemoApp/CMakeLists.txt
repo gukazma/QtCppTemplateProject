@@ -1,6 +1,6 @@
 set(TARGET_NAME DemoApp)
 
-find_package(Qt5 COMPONENTS Core Widgets Gui CONFIG REQUIRED)
+find_package(Qt5 COMPONENTS Core Widgets Gui OpenGL REQUIRED)
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
