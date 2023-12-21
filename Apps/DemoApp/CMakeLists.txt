@@ -1,10 +1,6 @@
 set(TARGET_NAME DemoApp)
 
-if (MSVC)
-  find_package(Qt5 COMPONENTS Core Widgets Gui CONFIG REQUIRED)
-else ()
-  find_package(Qt6 COMPONENTS Core Widgets Gui CONFIG REQUIRED)
-endif ()
+find_package(Qt5 COMPONENTS Core Widgets Gui CONFIG REQUIRED)
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
@@ -29,6 +25,9 @@ Qt5::OpenGL
 if(MSVC)
 message("Finding windeployqt")
 find_program(DEPLOYQT_EXECUTABLE windeployqt)
+set_target_properties(${TARGET_NAME} PROPERTIES
+LINK_FLAGS "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup"
+)
 else()
 message("Finding linuxdeployqt")
 find_program(DEPLOYQT_EXECUTABLE linuxdeployqt)
