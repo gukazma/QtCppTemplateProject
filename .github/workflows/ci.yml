@@ -50,13 +50,14 @@ jobs:
         if: startsWith(matrix.config.name, 'Ubuntu_Latest_GCC')
         run: |
           sudo apt-get update
-          sudo apt-get install ninja-build cmake
+          sudo apt-get install ninja-build cmake -y
+          sudo apt-get install linuxdeployqt -y
           ninja --version
           cmake --version
           gcc --version
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
-        
+
       - name: Use cmake
         run: cmake  -S./ -B./build -D CMAKE_BUILD_TYPE=${{ matrix.config.build_type }} && cmake --build ./build --config ${{ matrix.config.build_type }}
 
