@@ -45,12 +45,7 @@ jobs:
           choco install ninja cmake
           ninja --version
           cmake --version
-      - name: Install LinuxDeploy
-        if: startsWith(matrix.config.name, 'Ubuntu_Latest_GCC')
-        uses: miurahr/install-linuxdeploy-action@v1
-        with:
-          plugins: qt appimage
-
+          
       - name: Install dependencies on ubuntu
         if: startsWith(matrix.config.name, 'Ubuntu_Latest_GCC')
         run: |
