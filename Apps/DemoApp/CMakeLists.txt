@@ -26,8 +26,14 @@ Qt5::Widgets
 Qt5::OpenGL
 )
 
-
+if(MSVC)
+message("Finding windeployqt")
 find_program(DEPLOYQT_EXECUTABLE windeployqt)
+else()
+message("Finding linuxdeployqt")
+find_program(DEPLOYQT_EXECUTABLE linuxdeployqt)
+endif()
+
 add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
   COMMAND ${DEPLOYQT_EXECUTABLE} ${CMAKE_BINARY_DIR}/bin/${TARGET_NAME}.exe
   COMMENT "Deploying qt dependencies after build..."
