@@ -3,9 +3,9 @@ cmake_minimum_required(VERSION 3.16)
 # 设置基础环境
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-# 设置默认的编译配置为 Debug，conan.cmake 需要确定你当前正在使用哪种编译配置以决定如何下载和编译三方库
+# 设置默认的编译配置为 Release，conan.cmake 需要确定你当前正在使用哪种编译配置以决定如何下载和编译三方库
 if (NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "Choose the type of build." FORCE)
+    set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build." FORCE)
     message(STATUS "No CMAKE_BUILD_TYPE selected, defaulting to ${CMAKE_BUILD_TYPE}")
 endif ()
 
@@ -35,6 +35,8 @@ conan_basic_setup(TARGETS)
 
 
 option(ENABLE_DOCS "Enable doxygen docs" ON)
+option(ENABLE_DEBUG "Enable debug" ON)
+
 # just for qt
 # set(CMAKE_AUTOUIC ON)
 # set(CMAKE_AUTOMOC ON)
@@ -59,6 +61,21 @@ if(PROJECT_SOURCE_DIR STREQUAL PROJECT_BINARY_DIR)
     FATAL_ERROR
       "In-source builds not allowed. Please make a new directory (called a build directory) and run CMake from there."
   )
+endif()
+
+if(ENABLE_DEBUG)
+  if(MSVC)
+  # 使用 /O2 开启优化, /Zi 开启调试信息
+  # 使用 /O2 开启优化, /Zi 开启调试信息
+  set(CMAKE_CXX_FLAGS_RELEASE "/O2 /Zi /Ob1")
+
+  # 在链接阶段生成调试信息
+  set(CMAKE_SHARED_LINKER_FLAGS_RELEASE "${CMAKE_SHARED_LINKER_FLAGS_RELEASE} /DEBUG")
+  set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} /DEBUG")
+  else()
+  # 对于其他编译器, 使用 -O2 开启优化, -g 开启调试信息
+  set(CMAKE_CXX_FLAGS_RELEASE "-O2 -g")
+  endif()
 endif()
 
 add_subdirectory(Modules)
